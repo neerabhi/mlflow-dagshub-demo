@@ -7,7 +7,11 @@ from sklearn.metrics import accuracy_score, confusion_matrix
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-mlflow.set_tracking_uri('http://127.0.0.1:5000')
+import dagshub
+dagshub.init(repo_owner='neerabhi', repo_name='mlflow-dagshub-demo', mlflow=True)
+
+
+mlflow.set_tracking_uri('https://dagshub.com/neerabhi/mlflow-dagshub-demo.mlflow')
 
 # Load dataset
 iris = load_iris()
@@ -40,16 +44,16 @@ with mlflow.start_run():
 
     print('Accuracy:', accuracy)
 
-# Optional: Confusion matrix plot
-    cm = confusion_matrix(y_test, y_pred)
-    plt.figure(figsize=(5,4))
-    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=iris.target_names, yticklabels=iris.target_names)
-    plt.xlabel('Predicted')
-    plt.ylabel('Actual')
-    plt.title('Confusion Matrix')
-    plt.tight_layout()
-    plt.savefig("confusion_matrix.png")
-    mlflow.log_artifact("confusion_matrix.png")   
+# # Optional: Confusion matrix plot
+#     cm = confusion_matrix(y_test, y_pred)
+#     plt.figure(figsize=(5,4))
+#     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=iris.target_names, yticklabels=iris.target_names)
+#     plt.xlabel('Predicted')
+#     plt.ylabel('Actual')
+#     plt.title('Confusion Matrix')
+#     plt.tight_layout()
+#     plt.savefig("confusion_matrix.png")
+#     mlflow.log_artifact("confusion_matrix.png")   
 
-    mlflow.log_artifact(__file__)
-    mlflow.sklearn.log_model(dt, 'decision Tree')
+#     mlflow.log_artifact(__file__)
+#     mlflow.sklearn.log_model(dt, 'decision Tree')
